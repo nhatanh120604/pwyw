@@ -1,0 +1,132 @@
+{{ block title }}Results - Round {{ subsession.round_number }}{{ endblock }} {{
+block content }}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Round {{ subsession.round_number }} Results</h3>
+
+    {{ if is_buyer }}
+    <div class="alert alert-primary">
+      <h5>Your Role: BUYER</h5>
+    </div>
+    {{ else }}
+    <div class="alert alert-success">
+      <h5>Your Role: SELLER</h5>
+    </div>
+    {{ endif }}
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>Transaction Details</h4>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5>Buyer's Decision</h5>
+            {{ if buyer_decision }}
+            <p class="text-success"><strong>✓ Bought the product</strong></p>
+            <p>Amount paid: <strong>{{ price_paid }} tokens</strong></p>
+            {{ else }}
+            <p class="text-danger">
+              <strong>✗ Did not buy the product</strong>
+            </p>
+            {{ endif }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5>Product Details</h5>
+            <p>Product utility: <strong>{{ utility }} tokens</strong></p>
+            <p>
+              Production cost: <strong>{{ production_cost }} tokens</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>Payoff Calculation</h4>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="card border-primary">
+          <div class="card-body">
+            <h5 class="text-primary">Buyer's Payoff</h5>
+            {{ if buyer_decision }}
+            <p>Initial endowment: 100 tokens</p>
+            <p>Amount paid: -{{ price_paid }} tokens</p>
+            <p>Product utility: +{{ utility }} tokens</p>
+            <hr />
+            <p class="display-4 text-primary">{{ buyer_payoff }} tokens</p>
+            {{ else }}
+            <p>Initial endowment: 100 tokens</p>
+            <p class="text-muted">(No purchase made)</p>
+            <hr />
+            <p class="display-4 text-primary">{{ buyer_payoff }} tokens</p>
+            {{ endif }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-success">
+          <div class="card-body">
+            <h5 class="text-success">Seller's Payoff</h5>
+            {{ if buyer_decision }}
+            <p>Amount received: {{ price_paid }} tokens</p>
+            <p>Production cost: -{{ production_cost }} tokens</p>
+            <hr />
+            <p class="display-4 text-success">{{ seller_payoff }} tokens</p>
+            {{ else }}
+            <p class="text-muted">(No sale made)</p>
+            <hr />
+            <p class="display-4 text-success">{{ seller_payoff }} tokens</p>
+            {{ endif }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ if is_buyer }}
+    <div class="alert alert-info mt-4">
+      <strong>Your payoff for this round: {{ player.payoff }} tokens</strong>
+    </div>
+    {{ else }}
+    <div class="alert alert-info mt-4">
+      <strong>Your payoff for this round: {{ player.payoff }} tokens</strong>
+    </div>
+    {{ endif }}
+  </div>
+</div>
+
+{{ if subsession.round_number < C.NUM_ROUNDS }}
+<div class="alert alert-warning mt-4">
+  <p>
+    <strong
+      >Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS }}
+      complete.</strong
+    >
+  </p>
+  <p>
+    Click Next to continue to the next round. You may be assigned a different
+    role.
+  </p>
+</div>
+{{ else }}
+<div class="alert alert-success mt-4">
+  <p><strong>All rounds complete!</strong></p>
+  <p>Thank you for participating in the experiment.</p>
+</div>
+{{ endif }}
+
+<div class="mt-4">{{ next_button }}</div>
+
+{{ endblock }}

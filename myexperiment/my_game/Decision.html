@@ -1,0 +1,129 @@
+{{ block title }}Decision - Round {{ subsession.round_number }}{{ endblock }} {{
+block content }}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title text-primary">
+      Your Role: BUYER (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS
+      }})
+    </h3>
+
+    <div class="alert alert-info mt-3">
+      <h5>Role</h5>
+      <p>
+        You have been randomly assigned the role of the
+        <strong>"buyer"</strong>. The other person is in the role of the
+        "seller".
+      </p>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">Endowment</h5>
+            <p class="display-4 text-primary">{{ endowment }} tokens</p>
+            <small class="text-muted">Your starting amount</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">Product Utility</h5>
+            <p class="display-4 text-success">{{ utility }} tokens</p>
+            <small class="text-muted">Value you get from Product A</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Product Information</h5>
+        <p>
+          Product A is a hypothetical product that gives you personal utility of
+          <strong>{{ utility }} tokens</strong>.
+        </p>
+        <p class="text-muted">
+          <small
+            >Production cost for the seller: {{ production_cost }} tokens</small
+          >
+        </p>
+      </div>
+    </div>
+
+    {{ if treatment == C.HIGH_SUGGESTED or treatment == C.LOW_SUGGESTED }}
+    <div class="alert alert-warning mt-3">
+      <strong>Suggested Price:</strong> {{ suggested_price }} tokens
+    </div>
+    {{ endif }}
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Payoff Calculation</h5>
+        <ul>
+          <li>
+            The seller will receive the amount you choose to pay minus the
+            production cost ({{ production_cost }} tokens).
+          </li>
+          <li>
+            You will keep any remaining tokens plus the value you derive from
+            Product A ({{ utility }} tokens).
+          </li>
+        </ul>
+        <p class="text-primary">
+          <strong
+            >Your payoff = {{ endowment }} - [amount paid] + {{ utility
+            }}</strong
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>Make Your Decision</h4>
+
+    {{ formfield 'buyer_decision' }}
+
+    <div id="price-field" class="mt-3">{{ formfield 'price_paid' }}</div>
+  </div>
+</div>
+
+<div class="mt-4">{{ next_button }}</div>
+
+<script>
+  // Show/hide price field based on buyer decision
+  document.addEventListener("DOMContentLoaded", function () {
+    const buyerDecision = document.querySelector(
+      'input[name="buyer_decision"]'
+    );
+    const priceField = document.getElementById("price-field");
+
+    function togglePriceField() {
+      const yesChecked = document.querySelector(
+        'input[name="buyer_decision"][value="True"]'
+      ).checked;
+      if (yesChecked) {
+        priceField.style.display = "block";
+      } else {
+        priceField.style.display = "none";
+      }
+    }
+
+    // Initial state
+    togglePriceField();
+
+    // Listen for changes
+    document
+      .querySelectorAll('input[name="buyer_decision"]')
+      .forEach(function (radio) {
+        radio.addEventListener("change", togglePriceField);
+      });
+  });
+</script>
+
+{{ endblock }}

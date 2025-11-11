@@ -1,0 +1,83 @@
+{{ block title }}Waiting - Round {{ subsession.round_number }}{{ endblock }} {{
+block content }}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title text-success">
+      Your Role: SELLER (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS
+      }})
+    </h3>
+
+    <div class="alert alert-info mt-3">
+      <h5>Role</h5>
+      <p>
+        You have been randomly assigned the role of the
+        <strong>"seller"</strong>. The other person is in the role of the
+        "buyer".
+      </p>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">Endowment</h5>
+            <p class="display-4 text-primary">{{ endowment }} tokens</p>
+            <small class="text-muted">Your starting amount</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">Production Cost</h5>
+            <p class="display-4 text-danger">{{ production_cost }} tokens</p>
+            <small class="text-muted">Cost to produce Product A</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Product Information</h5>
+        <p>
+          Product A is a hypothetical product that costs
+          <strong>{{ production_cost }} tokens</strong> to produce.
+        </p>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Payoff Calculation</h5>
+        <ul>
+          <li>
+            You receive the amount the buyer decides to transfer to you minus
+            the production cost ({{ production_cost }} tokens).
+          </li>
+          <li>
+            The buyer receives the amount he/she decides not to transfer and
+            thus to keep.
+          </li>
+        </ul>
+        <p class="text-success">
+          <strong
+            >Your payoff = [amount received] - {{ production_cost }}</strong
+          >
+        </p>
+      </div>
+    </div>
+
+    <div class="alert alert-warning mt-4">
+      <h5><i class="fa fa-clock-o"></i> Waiting for the Buyer's Decision</h5>
+      <p>
+        The buyer is currently making their decision about whether to purchase
+        Product A and how much to pay. You do not make any decision in this
+        round. Please wait...
+      </p>
+    </div>
+  </div>
+</div>
+
+{{ endblock }}

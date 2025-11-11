@@ -1,0 +1,107 @@
+{{ block title }}Welcome to the Experiment{{ endblock }} {{ block content }}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Welcome to the Experiment</h3>
+    <p>
+      You are about to participate in a multi-round economic game where you will
+      interact with another anonymous participant to trade a hypothetical
+      product. The game requires you to make purchasing and pricing decisions
+      based on your assigned role and specific pricing conditions.
+    </p>
+    <p>
+      <strong
+        >Please read the following instructions carefully before starting the
+        first round.</strong
+      >
+    </p>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4 class="text-primary">BUYER ROLE</h4>
+
+    <h5 class="mt-3">Role</h5>
+    <p>
+      You have been randomly assigned the role of the <strong>"buyer"</strong>.
+      The other person is in the role of the "seller".
+    </p>
+
+    <h5 class="mt-3">Endowment</h5>
+    <p>
+      You are endowed with <strong>100 tokens</strong>, and in pay-what-you-want
+      pricing strategy, you can decide how much to pay the seller for Product A.
+      You can choose any amount between 0 and 100 tokens.
+    </p>
+
+    <h5 class="mt-3">Product</h5>
+    <p>
+      Product A is a hypothetical product that gives you personal utility (shown
+      to you each round).
+    </p>
+
+    <h5 class="mt-3">Payoff</h5>
+    <ul>
+      <li>
+        The seller will receive the amount you choose to pay minus the
+        production cost.
+      </li>
+      <li>
+        You will keep any remaining tokens plus the value you derive from
+        Product A.
+      </li>
+    </ul>
+
+    <h5 class="mt-3">At each session, you will be asked:</h5>
+    <ul>
+      <li>Do you want to buy Product A?</li>
+      <li>
+        If yes, how many tokens out of your 100-token endowment would you like
+        to transfer to the seller? You will receive the product at any cost.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4 class="text-success">SELLER ROLE</h4>
+
+    <h5 class="mt-3">Role</h5>
+    <p>
+      You have been randomly assigned the role of the <strong>"seller"</strong>.
+      The other person is in the role of the "buyer".
+    </p>
+
+    <h5 class="mt-3">Endowment</h5>
+    <p>
+      You are endowed with <strong>0 tokens</strong>. The buyer can decide how
+      much of his/her 100 tokens endowment to transfer to you. You do not make
+      any decision. The buyer can choose any amount between 0 and 100 under
+      pay-what-you-want pricing strategy.
+    </p>
+
+    <h5 class="mt-3">Product</h5>
+    <p>
+      Product A is a hypothetical product that costs a certain amount (shown to
+      you each round) to produce.
+    </p>
+
+    <h5 class="mt-3">Payoff</h5>
+    <ul>
+      <li>
+        You receive the amount the buyer decides to transfer to you minus the
+        production cost.
+      </li>
+      <li>
+        The buyer receives the amount he/she decides not to transfer and thus to
+        keep.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="mt-4">{{ next_button }}</div>
+
+{{ endblock }}
