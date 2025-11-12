@@ -2,7 +2,6 @@
 
 <div class="card">
   <div class="card-body">
-    <h3 class="card-title">Welcome to the Experiment</h3>
     <p>
       You are about to participate in a multi-round economic game where you will
       interact with another anonymous participant to trade a hypothetical
@@ -24,15 +23,15 @@
 
     <h5 class="mt-3">Role</h5>
     <p>
-      You have been randomly assigned the role of the <strong>"buyer"</strong>.
-      The other person is in the role of the "seller".
+      You have been randomly assigned the role of the <strong>BUYER</strong>.
+      The other person is in the role of the <strong>SELLER</strong>.
     </p>
 
     <h5 class="mt-3">Endowment</h5>
     <p>
-      You are endowed with <strong>100 tokens</strong>, and in pay-what-you-want
-      pricing strategy, you can decide how much to pay the seller for Product A.
-      You can choose any amount between 0 and 100 tokens.
+      You are endowed with <strong>100 tokens</strong>, you can decide how much
+      to pay the SELLER for Product A. You can choose any amount between 0 and
+      100 tokens.
     </p>
 
     <h5 class="mt-3">Product</h5>
@@ -42,9 +41,10 @@
     </p>
 
     <h5 class="mt-3">Payoff</h5>
+    <p>If you choose to buy the product:</p>
     <ul>
       <li>
-        The seller will receive the amount you choose to pay minus the
+        The SELLER will receive the amount you choose to pay minus the
         production cost.
       </li>
       <li>
@@ -52,13 +52,17 @@
         Product A.
       </li>
     </ul>
+    <p>If you choose to NOT buy the product:</p>
+    <ul>
+      <li>Each of you will receive zero.</li>
+    </ul>
 
     <h5 class="mt-3">At each session, you will be asked:</h5>
     <ul>
       <li>Do you want to buy Product A?</li>
       <li>
         If yes, how many tokens out of your 100-token endowment would you like
-        to transfer to the seller? You will receive the product at any cost.
+        to transfer to the SELLER? You will receive the product at any cost.
       </li>
     </ul>
   </div>
@@ -70,16 +74,15 @@
 
     <h5 class="mt-3">Role</h5>
     <p>
-      You have been randomly assigned the role of the <strong>"seller"</strong>.
-      The other person is in the role of the "buyer".
+      You have been randomly assigned the role of the <strong>SELLER</strong>.
+      The other person is in the role of the BUYER.
     </p>
 
     <h5 class="mt-3">Endowment</h5>
     <p>
-      You are endowed with <strong>0 tokens</strong>. The buyer can decide how
-      much of his/her 100 tokens endowment to transfer to you. You do not make
-      any decision. The buyer can choose any amount between 0 and 100 under
-      pay-what-you-want pricing strategy.
+      You are endowed with 0 tokens in this round. You do not make any decision.
+      The BUYER can decide how much of his/her 100 tokens endowment to transfer
+      to you and he/she can choose any amount between 0 and 100 tokens.
     </p>
 
     <h5 class="mt-3">Product</h5>
@@ -89,16 +92,67 @@
     </p>
 
     <h5 class="mt-3">Payoff</h5>
+    <p>If the BUYER chooses to buy the product:</p>
     <ul>
       <li>
-        You receive the amount the buyer decides to transfer to you minus the
+        You receive the amount the BUYER decides to transfer to you minus the
         production cost.
       </li>
       <li>
-        The buyer receives the amount he/she decides not to transfer and thus to
+        The BUYER receives the amount he/she decides not to transfer and thus to
         keep.
       </li>
     </ul>
+    <p>If the BUYER chooses to NOT buy the product:</p>
+    <ul>
+      <li>Each of you will receive zero.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h4>Payment Information</h4>
+
+    <p>
+      In each round, you will earn an income based on your role and decisions.
+      Your income is calculated separately for each round and will be shown to
+      you at the end of that round.
+    </p>
+
+    <table class="table table-bordered text-center mt-3">
+      <thead class="thead-light">
+        <tr>
+          <th>Income</th>
+          <th>BUYER</th>
+          <th>SELLER</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Decides to buy the product</td>
+          <td>Remaining endowment - Price paid + Utility</td>
+          <td>Price paid - Production cost</td>
+        </tr>
+        <tr>
+          <td>Decides not to buy the product</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      At the end of the experiment, one round will be randomly selected by the
+      computer. Only the income from the selected round will be used to
+      determine your final monetary payment. All other rounds are for
+      experimental purposes only. The selection is fair and transparent, which
+      means every round has an equal chance of being chosen.
+    </p>
+    <p>
+      <strong>Conversion rate:</strong> 100 tokens = 50,000 VND. Your final
+      payment equals the income from the selected round converted to cash.
+    </p>
   </div>
 </div>
 

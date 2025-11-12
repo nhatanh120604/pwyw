@@ -8,11 +8,51 @@
       rules:
     </p>
 
+    <button
+      class="btn btn-link mb-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#instructionsCollapse"
+      aria-expanded="false"
+      aria-controls="instructionsCollapse"
+    >
+      Show Instructions
+    </button>
+    <div class="collapse mb-3" id="instructionsCollapse">
+      <div class="card card-body">
+        <h5>Game Instructions</h5>
+        <ul>
+          <li>
+            There are two roles: <strong>Buyer</strong> and
+            <strong>Seller</strong>.
+          </li>
+          <li>
+            Each round, the Buyer decides whether to buy a product and how much
+            to pay (any amount from 0 to 100 tokens). The Seller does not make
+            any decisions.
+          </li>
+
+          <li>
+            The Buyer's payoff is: Endowment - Amount Paid + Product Utility (if
+            bought; otherwise, payoff is 0).
+          </li>
+          <li>
+            The Seller's payoff is: Amount Paid - Production Cost (if bought;
+            otherwise, payoff is 0).
+          </li>
+          <li>
+            Product utility and production cost are randomized each round.
+          </li>
+          <li>Roles may swap in different rounds.</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="mt-4">{{ formfields }}</div>
 
     <div class="alert alert-info mt-4">
-      <strong>Note:</strong> If you answer incorrectly, you will be redirected
-      back to the instructions page.
+      <strong>Note:</strong> You won't be able to proceed to the next page
+      unless you answer all questions correctly.  
     </div>
   </div>
 </div>

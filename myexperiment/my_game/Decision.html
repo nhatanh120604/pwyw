@@ -9,12 +9,23 @@ block content }}
     </h3>
 
     <div class="alert alert-info mt-3">
-      <h5>Role</h5>
       <p>
         You have been randomly assigned the role of the
-        <strong>"buyer"</strong>. The other person is in the role of the
-        "seller".
+        <strong>BUYER</strong>. The other person is in the role of the
+        <strong>SELLER</strong>.
       </p>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Product Information</h5>
+        <p>
+          Product A is a hypothetical product that gives you personal utility of
+          <strong>{{ utility }} tokens</strong>. The suggested price for this
+          product, as set by the seller, is
+          <strong>{{ suggested_price }} tokens</strong>.
+        </p>
+      </div>
     </div>
 
     <div class="row mt-3">
@@ -40,44 +51,17 @@ block content }}
 
     <div class="card mt-3">
       <div class="card-body">
-        <h5 class="card-title">Product Information</h5>
-        <p>
-          Product A is a hypothetical product that gives you personal utility of
-          <strong>{{ utility }} tokens</strong>.
-        </p>
-        <p class="text-muted">
-          <small
-            >Production cost for the seller: {{ production_cost }} tokens</small
-          >
-        </p>
-      </div>
-    </div>
-
-    {{ if treatment == C.HIGH_SUGGESTED or treatment == C.LOW_SUGGESTED }}
-    <div class="alert alert-warning mt-3">
-      <strong>Suggested Price:</strong> {{ suggested_price }} tokens
-    </div>
-    {{ endif }}
-
-    <div class="card mt-3">
-      <div class="card-body">
         <h5 class="card-title">Payoff Calculation</h5>
         <ul>
           <li>
             The seller will receive the amount you choose to pay minus the
-            production cost ({{ production_cost }} tokens).
+            production cost.
           </li>
           <li>
             You will keep any remaining tokens plus the value you derive from
-            Product A ({{ utility }} tokens).
-          </li>
+            Product A.
+          </li> 
         </ul>
-        <p class="text-primary">
-          <strong
-            >Your payoff = {{ endowment }} - [amount paid] + {{ utility
-            }}</strong
-          >
-        </p>
       </div>
     </div>
   </div>

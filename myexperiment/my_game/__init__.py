@@ -164,8 +164,8 @@ class Group(BaseGroup):
             buyer.payoff = C.BUYER_ENDOWMENT - self.price_paid + self.product_utility
             seller.payoff = self.price_paid - self.production_cost
         else:
-            # Buyer did not buy
-            buyer.payoff = C.BUYER_ENDOWMENT
+            # Buyer did not buy: both payoffs are 0
+            buyer.payoff = 0
             seller.payoff = 0
 
 
@@ -208,9 +208,13 @@ class ComprehensionCheck(Page):
 
     @staticmethod
     def error_message(player: Player, values):
-        """Validate comprehension check answers"""
+        """Validate comprehension check answers and show error with link to instructions if incorrect"""
         if values["comp_q1"] is not False or values["comp_q2"] is not False:
-            return "One or more answers are incorrect. Please read the instructions again carefully."
+            return (
+                "One or more answers are incorrect. "
+                'Please <a href="#" id="showInstructionsLink">review the instructions</a> and try again.'
+                "<script>setTimeout(function(){var l=document.getElementById('showInstructionsLink');if(l){l.onclick=function(e){e.preventDefault();var c=document.getElementById('instructionsCollapse');if(c){c.classList.add('show');c.scrollIntoView({behavior:'smooth'});}}}},0);</script>"
+            )
 
 
 class Decision(Page):
@@ -252,7 +256,7 @@ class Decision(Page):
         )
 
 
-class WaitForBuyer(WaitPage):
+class SellerInfo(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.role() == C.SELLER_ROLE
@@ -262,6 +266,12 @@ class WaitForBuyer(WaitPage):
         return dict(
             endowment=C.SELLER_ENDOWMENT, production_cost=player.group.production_cost
         )
+
+
+class WaitForBuyer(WaitPage):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.role() == C.SELLER_ROLE
 
 
 class ResultsWaitPage(WaitPage):
@@ -299,6 +309,7 @@ page_sequence = [
     Introduction,
     ComprehensionCheck,
     Decision,
+    SellerInfo,
     WaitForBuyer,
     ResultsWaitPage,
     Results,
