@@ -1,0 +1,43 @@
+{{ block title }}Thank You{{ endblock }} {{ block content }}
+
+<div class="card">
+  <div class="card-body">
+    <h3 class="text-primary mb-4">Thank You for Your Participation!</h3>
+    <p>
+      Thank you for participating in our study. Your decision data has been
+      securely saved.
+    </p>
+
+    <div class="alert alert-info mt-4">
+      <p>
+        Based on the randomly selected round (Round {{ selected_round_number }})
+        and your decisions, your total earnings have been calculated as follows:
+      </p>
+      <h4 class="text-center mt-3">
+        Total Payment: <br />
+        <span class="text-success fw-bold">{{ total_payment_vnd }} VND</span>
+      </h4>
+      <p class="text-center text-muted fst-italic">
+        (Including Show-up Fee plus Payoff from Selected Round)
+      </p>
+    </div>
+
+    <p class="mt-4">
+      Please enter your banking details below so we can process your transfer.
+      Please double-check your numbers. We are not responsible for transfers sent
+      to incorrect account numbers provided here.
+    </p>
+
+    <div class="mt-3">
+      {{ formfield 'bank_name' label="Bank Name: (e.g., Vietcombank, Techcombank, etc.)" }}
+      {{ formfield 'account_number' label="Account Number:" }}
+      {{ formfield 'account_holder_name' label="Account Holder Name: (e.g., NGUYEN VAN A)" }}
+    </div>
+
+    <div class="mt-4 text-center">
+      <button class="btn btn-primary btn-lg">SUBMIT</button>
+    </div>
+  </div>
+</div>
+
+{{ endblock }}

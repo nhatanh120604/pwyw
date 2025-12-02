@@ -19,94 +19,95 @@
 
 <div class="card mt-4">
   <div class="card-body">
-    <h4 class="text-primary">BUYER ROLE</h4>
+    <h4 class="text-primary mb-3">BUYER ROLE</h4>
 
-    <h5 class="mt-3">Role</h5>
-    <p>
-      You have been randomly assigned the role of the <strong>BUYER</strong>.
-      The other person is in the role of the <strong>SELLER</strong>.
-    </p>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Endowment</h5>
+        <p>
+          You begin this round with an endowment of <strong>100 tokens</strong>.
+          Your task is to decide how much you wish to pay the SELLER for Product A.
+          You may choose to transfer any amount between 0 and 100 tokens.
+        </p>
+    </div>
 
-    <h5 class="mt-3">Endowment</h5>
-    <p>
-      You are endowed with <strong>100 tokens</strong>, you can decide how much
-      to pay the SELLER for Product A. You can choose any amount between 0 and
-      100 tokens.
-    </p>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Product</h5>
+        <p>
+          Product A is a hypothetical good. Its value to you (your personal utility)
+          will be displayed on your screen at the beginning of each round.
+        </p>
+    </div>
 
-    <h5 class="mt-3">Product</h5>
-    <p>
-      Product A is a hypothetical product that gives you personal utility (shown
-      to you each round).
-    </p>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Payoff</h5>
+        <p>
+          If you decide to <strong>purchase</strong> the product, you will receive it regardless of the price you pay:
+        </p>
+        <ul>
+            <li>The SELLER will receive the amount you choose to pay, minus the production cost.</li>
+            <li>You will receive your remaining endowment plus the utility value you derive from Product A.</li>
+        </ul>
+        <hr>
+        <p class="mb-0">
+          If you decide <strong>NOT to purchase</strong> the product:
+        </p>
+        <ul>
+            <li>The SELLER will receive 0.</li>
+            <li>You will retain your initial endowment.</li>
+        </ul>
+    </div>
 
-    <h5 class="mt-3">Payoff</h5>
-    <p>If you choose to buy the product:</p>
-    <ul>
-      <li>
-        The SELLER will receive the amount you choose to pay minus the
-        production cost.
-      </li>
-      <li>
-        You will keep any remaining tokens plus the value you derive from
-        Product A.
-      </li>
-    </ul>
-    <p>If you choose to NOT buy the product:</p>
-    <ul>
-      <li>Each of you will receive zero.</li>
-    </ul>
-
-    <h5 class="mt-3">At each session, you will be asked:</h5>
-    <ul>
-      <li>Do you want to buy Product A?</li>
-      <li>
-        If yes, how many tokens out of your 100-token endowment would you like
-        to transfer to the SELLER? You will receive the product at any cost.
-      </li>
-    </ul>
+    <div class="alert alert-info">
+        <h5 class="alert-heading">Decision Task</h5>
+        <p class="mb-2">In each round, you will be asked to answer the following:</p>
+        <ul class="mb-0">
+          <li>Do you wish to purchase Product A?</li>
+          <li>
+            If yes, how many tokens from your 100-token endowment would you like to transfer to the SELLER?
+            (Note: You will receive the product regardless of the amount transferred.)
+          </li>
+        </ul>
+    </div>
   </div>
 </div>
 
 <div class="card mt-4">
   <div class="card-body">
-    <h4 class="text-success">SELLER ROLE</h4>
+    <h4 class="text-success mb-3">SELLER ROLE</h4>
 
-    <h5 class="mt-3">Role</h5>
-    <p>
-      You have been randomly assigned the role of the <strong>SELLER</strong>.
-      The other person is in the role of the BUYER.
-    </p>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Endowment</h5>
+        <p>
+          You begin this round with <strong>0 tokens</strong>. You do not make any active decisions.
+          The BUYER will determine how much of their 100-token endowment to transfer to you for Product A.
+        </p>
+    </div>
 
-    <h5 class="mt-3">Endowment</h5>
-    <p>
-      You are endowed with 0 tokens in this round. You do not make any decision.
-      The BUYER can decide how much of his/her 100 tokens endowment to transfer
-      to you and he/she can choose any amount between 0 and 100 tokens.
-    </p>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Product</h5>
+        <p>
+          Product A is a hypothetical good. The cost to produce this good will be displayed on your screen at the beginning of each round.
+        </p>
+    </div>
 
-    <h5 class="mt-3">Product</h5>
-    <p>
-      Product A is a hypothetical product that costs a certain amount (shown to
-      you each round) to produce.
-    </p>
-
-    <h5 class="mt-3">Payoff</h5>
-    <p>If the BUYER chooses to buy the product:</p>
-    <ul>
-      <li>
-        You receive the amount the BUYER decides to transfer to you minus the
-        production cost.
-      </li>
-      <li>
-        The BUYER receives the amount he/she decides not to transfer and thus to
-        keep.
-      </li>
-    </ul>
-    <p>If the BUYER chooses to NOT buy the product:</p>
-    <ul>
-      <li>Each of you will receive zero.</li>
-    </ul>
+    <div class="alert alert-light border text-dark">
+        <h5 class="alert-heading text-dark">Payoff</h5>
+        <p>
+          If the BUYER decides to <strong>purchase</strong> the product, they will receive it regardless of the price paid:
+        </p>
+        <ul>
+            <li>You will receive the amount the BUYER chooses to pay, minus the production cost.</li>
+            <li>The BUYER will receive their remaining endowment plus the utility value they derive from Product A.</li>
+        </ul>
+        <hr>
+        <p class="mb-0">
+          If the BUYER decides <strong>NOT to purchase</strong> the product:
+        </p>
+        <ul>
+            <li>You will receive 0.</li>
+            <li>The BUYER will retain their initial endowment.</li>
+        </ul>
+    </div>
   </div>
 </div>
 
@@ -115,15 +116,15 @@
     <h4>Payment Information</h4>
 
     <p>
-      In each round, you will earn an income based on your role and decisions.
-      Your income is calculated separately for each round and will be shown to
+      In each round, you will earn a payoff based on your role and decisions.
+      Your payoff is calculated separately for each round and will be shown to
       you at the end of that round.
     </p>
 
     <table class="table table-bordered text-center mt-3">
       <thead class="thead-light">
         <tr>
-          <th>Income</th>
+          <th>Payoff</th>
           <th>BUYER</th>
           <th>SELLER</th>
         </tr>
@@ -131,12 +132,12 @@
       <tbody>
         <tr>
           <td>Decides to buy the product</td>
-          <td>Remaining endowment - Price paid + Utility</td>
+          <td>Endowment - Price paid + Utility value</td>
           <td>Price paid - Production cost</td>
         </tr>
         <tr>
           <td>Decides not to buy the product</td>
-          <td>0</td>
+          <td>Endowment</td>
           <td>0</td>
         </tr>
       </tbody>
@@ -144,14 +145,17 @@
 
     <p>
       At the end of the experiment, one round will be randomly selected by the
-      computer. Only the income from the selected round will be used to
-      determine your final monetary payment. All other rounds are for
+      computer. <strong>Only the income from the selected round will be used to
+      determine your final monetary payment.</strong> All other rounds are for
       experimental purposes only. The selection is fair and transparent, which
       means every round has an equal chance of being chosen.
     </p>
     <p>
-      <strong>Conversion rate:</strong> 100 tokens = 50,000 VND. Your final
-      payment equals the income from the selected round converted to cash.
+      Your final payment equals the token earnings from this selected round plus
+      the token show-up fee. The total token amount is then converted to VND at
+      a predetermined exchange rate. If you have a negative payoff in the
+      selected round, the loss is deducted from your show-up fee tokens before
+      conversion.
     </p>
   </div>
 </div>

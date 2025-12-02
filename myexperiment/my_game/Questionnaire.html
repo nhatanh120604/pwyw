@@ -1,0 +1,127 @@
+{{ block title }}Questionnaire{{ endblock }} {{ block content }}
+
+<div class="card">
+  <div class="card-body">
+    <p>
+      Thank you for completing the decision-making portion of the experiment.
+      Next, please answer the following questions regarding your experience and
+      background. Your answers are anonymous and will be used for research
+      purposes only.
+    </p>
+
+    <h4 class="mt-4">Part 1: Decision Reflection</h4>
+    <p>
+      Please indicate how much you agree or disagree with the following
+      statements regarding the decisions you made in the previous rounds.
+      <br />
+      <i
+        >(Scale 1 = Strongly Disagree to 7 = Strongly Agree)</i
+      >
+    </p>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Statement</th>
+          <th style="width: 40%; text-align: center">
+            1 = Strongly Disagree ... 7 = Strongly Agree
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ for f in q_fields }}
+        <tr>
+          <td>{{ f.label }}</td>
+          <td>{{ formfield f.name label="" }}</td>
+        </tr>
+        {{ endfor }}
+      </tbody>
+    </table>
+
+    <h4 class="mt-5">Part 2: Background Information</h4>
+
+    {{ formfield 'dem_sex' }}
+    {{ formfield 'dem_age' }}
+
+    <div class="mb-3 _formfield">
+        <label class="col-form-label">3. What is your current employment status? (Select all that apply)</label>
+        <div class="controls">
+            <div class="form-check">
+                <input class="form-check-input employment-checkbox" type="checkbox" value="Student" id="emp_student">
+                <label class="form-check-label" for="emp_student">Student</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input employment-checkbox" type="checkbox" value="Working" id="emp_working">
+                <label class="form-check-label" for="emp_working">Working</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input employment-checkbox" type="checkbox" value="Retired" id="emp_retired">
+                <label class="form-check-label" for="emp_retired">Retired</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input employment-checkbox" type="checkbox" value="Unemployed" id="emp_unemployed">
+                <label class="form-check-label" for="emp_unemployed">Unemployed</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input employment-checkbox" type="checkbox" value="Other" id="emp_other">
+                <label class="form-check-label" for="emp_other">Other</label>
+            </div>
+            <input type="hidden" name="dem_employment" id="id_dem_employment">
+        </div>
+    </div>
+
+    {{ formfield 'dem_income' }}
+    {{ formfield 'dem_familiar' }}
+
+    <div id="strategy-name-wrapper" style="display: none">
+      {{ formfield 'dem_strategy_name' }}
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">{{ next_button }}</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Familiarity field logic
+    const familiarField = document.querySelectorAll(
+      'input[name="dem_familiar"]'
+    );
+    const strategyWrapper = document.getElementById("strategy-name-wrapper");
+
+    function toggleStrategyField() {
+      const yesChecked = document.querySelector(
+        'input[name="dem_familiar"][value="Yes"]'
+      ).checked;
+      if (yesChecked) {
+        strategyWrapper.style.display = "block";
+      } else {
+        strategyWrapper.style.display = "none";
+      }
+    }
+
+    familiarField.forEach(function (radio) {
+      radio.addEventListener("change", toggleStrategyField);
+    });
+
+    // Employment checkboxes logic
+    const employmentCheckboxes = document.querySelectorAll('.employment-checkbox');
+    const employmentHiddenInput = document.getElementById('id_dem_employment');
+
+    function updateEmploymentInput() {
+        const selected = [];
+        employmentCheckboxes.forEach(function(cb) {
+            if (cb.checked) {
+                selected.push(cb.value);
+            }
+        });
+        employmentHiddenInput.value = JSON.stringify(selected);
+    }
+
+    employmentCheckboxes.forEach(function(cb) {
+        cb.addEventListener('change', updateEmploymentInput);
+    });
+  });
+</script>
+
+{{ endblock }}

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  webapp:
+    build: .
+    ports:
+      - "8000:8000"
+    command: otree devserver 0.0.0.0:8000
+    volumes:
+      - .:/opt/otree

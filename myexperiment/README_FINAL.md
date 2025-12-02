@@ -8,7 +8,7 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 
 ### Game Structure
 
-**Duration**: 6 rounds total
+**Duration**: 2 rounds total (configurable)
 **Players per round**: 2 (one Buyer, one Seller)
 **Role assignment**: Roles swap between rounds so each participant experiences both perspectives
 **No repeated pairings**: Participants are matched with different partners across rounds
@@ -22,7 +22,7 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 - **Decision**: Choose whether to buy the product, and if yes, how much to pay (0-100 tokens)
 - **Payoff calculation**:
   - If bought: 100 - amount_paid + product_utility
-  - If not bought: 0
+  - If not bought: 100 (Buyer keeps endowment)
 
 #### Seller
 
@@ -35,11 +35,11 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 
 ### Treatment Conditions
 
-The experiment includes three pricing conditions, experienced twice each across the 6 rounds in randomized order:
+The experiment includes three pricing conditions, randomized for each participant:
 
-1. **Control** (2 rounds): No suggested price shown
-2. **High Suggested Price** (2 rounds): Suggested price of 70 tokens displayed
-3. **Low Suggested Price** (2 rounds): Suggested price of 30 tokens displayed
+1. **Control**: No suggested price shown
+2. **High Suggested Price**: Suggested price of 70 tokens displayed
+3. **Low Suggested Price**: Suggested price of 30 tokens displayed
 
 Note: Suggested prices are advisory only; buyers can choose any amount.
 
@@ -47,19 +47,34 @@ Note: Suggested prices are advisory only; buyers can choose any amount.
 
 **Round 1 Only:**
 
-1. Introduction page - Complete instructions for both roles
-2. Comprehension check - Two questions to verify understanding
-   - Must answer correctly to proceed
-   - Can review instructions via collapsible section if needed
+1. **Introduction**: Complete instructions for both roles.
+   - Includes detailed payoff explanations with bullet points for clarity.
+   - Uses neutral styling with black text for readability.
+2. **Comprehension Check**: Seven questions to verify understanding.
+   - Includes full instructions in a collapsible section.
+   - Must answer correctly to proceed.
 
-**Every Round:** 3. **Buyer**: Decision page (choose to buy and set price)
-**Seller**: Information page (see role and production cost) → Waiting page 4. Results page - Shows transaction details and payoff calculation for your role
+**Every Round:**
+
+3. **Buyer**: Decision page (choose to buy and set price).
+4. **Seller**: Information page (see role and production cost) → Waiting page.
+5. **Results**: Shows transaction details and payoff calculation for your role.
+
+**Final Round Only:**
+
+6. **Questionnaire**:
+   - **Part 1**: Decision reflection (Likert scale questions).
+   - **Part 2**: Background information (Demographics, Employment, Income).
+   - **Strategy Check**: Conditional question asking for strategy name if familiar.
+7. **Thank You**:
+   - Displays final payment calculation (Show-up fee + Payoff from one random round).
+   - Collects banking information for payment transfer.
 
 ### Information Structure
 
 - **Complete information**: Both buyer and seller know the product utility and production cost
 - **Transparency**: All payoff formulas are explained upfront
-- **Fair compensation**: One random round will be selected at the end for actual payment (100 tokens = 50,000 VND)
+- **Fair compensation**: One random round will be selected at the end for actual payment (100 tokens = 50,000 VND) + Show-up fee (100 tokens).
 
 ---
 
@@ -98,23 +113,64 @@ otree devserver
    - Click "Demo" next to "Pay-What-You-Want Game"
    - Open 2 browser windows (or use incognito mode) for testing
 
+#### Option B: Running with Docker (Terminal Only)
+
+You can run this project on any operating system (Windows, macOS, Linux) using just the terminal.
+
+**1. Install Docker (via Terminal)**
+
+If you don't have Docker installed, you can install it using your system's package manager:
+
+- **Windows** (PowerShell):
+  ```powershell
+  winget install Docker.DockerDesktop
+  ```
+- **macOS** (Homebrew):
+  ```bash
+  brew install --cask docker
+  ```
+- **Linux** (Ubuntu/Debian):
+  ```bash
+  sudo apt-get update
+  sudo apt-get install docker.io
+  ```
+
+*Note: After installation, ensure Docker is running.*
+
+**2. Run the Project**
+
+Open your terminal in the project folder and run these two commands:
+
+1. **Build the image** (only needed once):
+   ```bash
+   docker build -t pwyw-experiment .
+   ```
+
+2. **Run the container**:
+   ```bash
+   docker run -p 8000:8000 pwyw-experiment
+   ```
+
+3. **Access**: Open http://localhost:8000 in your browser.
+
 #### Testing Checklist
 
 Test the following with 2 demo participants:
 
-- [ ] Introduction displays both Buyer and Seller role descriptions
-- [ ] Comprehension check blocks wrong answers and allows reviewing instructions
-- [ ] Buyer sees correct product utility and can make decisions
-- [ ] Price input field only appears when buyer selects "Yes"
-- [ ] Seller sees their role information page with a Next button
-- [ ] Seller sees waiting screen after clicking Next
-- [ ] Results page shows correct buyer decision and amount paid
-- [ ] Results page displays payoff calculation for the player's role only
-- [ ] Payoff calculations are accurate
-- [ ] Roles swap in subsequent rounds
-- [ ] Treatment conditions vary across rounds
-- [ ] All 6 rounds complete successfully
-- [ ] Data exports correctly from admin panel
+- [ ] Introduction displays both Buyer and Seller role descriptions correctly (bullet points, black text).
+- [ ] Comprehension check blocks wrong answers and allows reviewing instructions.
+- [ ] Buyer sees correct product utility and can make decisions.
+- [ ] Price input field only appears when buyer selects "Yes".
+- [ ] Seller sees their role information page with a Next button.
+- [ ] Seller sees waiting screen after clicking Next.
+- [ ] Results page shows correct buyer decision and amount paid.
+- [ ] Payoff calculations are accurate (especially "Buyer keeps endowment" if not buying).
+- [ ] Roles swap in subsequent rounds.
+- [ ] Questionnaire appears after the final round.
+- [ ] Questionnaire conditional logic works (Strategy Name field appears only if "Yes" is selected for Familiarity).
+- [ ] Thank You page displays correct total payment (Show-up fee + Selected round payoff).
+- [ ] Banking information form works.
+- [ ] Data exports correctly from admin panel.
 
 #### Data Export
 
@@ -127,14 +183,15 @@ After running a session:
 
 **Key variables in the dataset:**
 
-- `subsession.round_number` - Round (1-6)
+- `subsession.round_number` - Round (1-2)
 - `player.role` - Buyer or Seller
 - `group.treatment` - control, high_suggested, or low_suggested
-- `group.product_utility` - Utility value shown to buyer
-- `group.production_cost` - Cost shown to seller
 - `group.buyer_decision` - True (bought) or False (didn't buy)
 - `group.price_paid` - Amount transferred (0-100)
 - `player.payoff` - Calculated payoff for that round
+- `player.q_fair_price`...`player.q_suggested_quality` - Questionnaire Part 1 responses
+- `player.dem_sex`...`player.dem_strategy_name` - Questionnaire Part 2 responses
+- `player.bank_name`...`player.account_holder_name` - Banking details
 
 #### Production Deployment
 
@@ -160,51 +217,29 @@ otree prodserver 80
 ```
 myexperiment/
 ├── my_game/
-│   ├── __init__.py              # Main game logic
+│   ├── __init__.py              # Main game logic (Models, Pages, Payoff logic)
 │   ├── Introduction.html        # Instructions (round 1 only)
 │   ├── ComprehensionCheck.html  # Comprehension test (round 1 only)
 │   ├── Decision.html            # Buyer decision page
 │   ├── SellerInfo.html          # Seller information page
-│   └── Results.html             # Results display
+│   ├── Results.html             # Results display
+│   ├── Questionnaire.html       # Post-experiment survey
+│   └── ThankYou.html            # Final payment and banking info
 ├── settings.py                  # oTree configuration
 └── requirements.txt             # Python dependencies
 ```
 
 #### Common Customizations
 
-##### 0. Change Number of Demo Participants
-
-**File**: `settings.py`
-**Location**: Line 6
-
-```python
-num_demo_participants=6,  # Current setting
-```
-
-Change to any **even number** (must be even for Buyer-Seller pairing):
-
-```python
-num_demo_participants=2,   # For 2 players (1 pair)
-num_demo_participants=4,   # For 4 players (2 pairs)
-num_demo_participants=6,   # For 6 players (3 pairs)
-num_demo_participants=8,   # For 8 players (4 pairs)
-```
-
-This controls how many participant links appear in the demo mode.
-
----
-
-All other modifications are made in `my_game/__init__.py`:
+All modifications are made in `my_game/__init__.py`:
 
 ##### 1. Change Number of Rounds
 
 **Location**: Line 15
 
 ```python
-NUM_ROUNDS = 6  # Change to desired number
+NUM_ROUNDS = 2  # Change to desired number
 ```
-
-Note: If changing rounds, also update treatment distribution in `creating_session()` function (around line 50).
 
 ##### 2. Adjust Endowments
 
@@ -224,222 +259,24 @@ HIGH_SUGGESTED_PRICE = 70   # High suggested price
 LOW_SUGGESTED_PRICE = 30    # Low suggested price
 ```
 
-##### 4. Change Product Utility Range
+##### 4. Modify Payoff Logic
 
-**Location**: Line 146 in `creating_session()` function
-
-```python
-group.product_utility = random.randint(40, 90)  # Min 40, Max 90
-```
-
-Example: For utility between 50-100:
-
-```python
-group.product_utility = random.randint(50, 100)
-```
-
-##### 5. Change Production Cost Range
-
-**Location**: Line 149 in `creating_session()` function
-
-```python
-group.production_cost = random.randint(20, 60)  # Min 20, Max 60
-```
-
-Example: For cost between 10-50:
-
-```python
-group.production_cost = random.randint(10, 50)
-```
-
-##### 6. Modify Payoff Logic
-
-**Location**: Lines 168-179 in `set_payoffs()` method of the `Group` class
+**Location**: `set_payoffs()` method of the `Group` class
 
 Current logic:
-
 - If buyer bought: Buyer gets (100 - price + utility), Seller gets (price - cost)
-- If buyer didn't buy: Both get 0
+- If buyer didn't buy: Buyer gets 100 (keeps endowment), Seller gets 0
 
-To change (e.g., buyer keeps endowment if not buying):
+##### 5. Modify Questionnaire Labels
 
-```python
-def set_payoffs(self):
-    buyer = [p for p in self.get_players() if p.role() == C.BUYER_ROLE][0]
-    seller = [p for p in self.get_players() if p.role() == C.SELLER_ROLE][0]
+**Location**: `vars_for_template` method in `Questionnaire` class
 
-    if self.buyer_decision and self.price_paid is not None:
-        buyer.payoff = C.BUYER_ENDOWMENT - self.price_paid + self.product_utility
-        seller.payoff = self.price_paid - self.production_cost
-    else:
-        # Modified: buyer keeps endowment if not buying
-        buyer.payoff = C.BUYER_ENDOWMENT
-        seller.payoff = 0
-```
-
-##### 7. Adjust Treatment Distribution
-
-**Location**: Lines 50-57 in `creating_session()` function
-
-Current distribution (2 rounds each):
-
-```python
-all_treatments = [
-    C.CONTROL,
-    C.CONTROL,
-    C.HIGH_SUGGESTED,
-    C.HIGH_SUGGESTED,
-    C.LOW_SUGGESTED,
-    C.LOW_SUGGESTED,
-]
-```
-
-Example: For 3 control rounds, 2 high, 1 low (6 rounds total):
-
-```python
-all_treatments = [
-    C.CONTROL,
-    C.CONTROL,
-    C.CONTROL,
-    C.HIGH_SUGGESTED,
-    C.HIGH_SUGGESTED,
-    C.LOW_SUGGESTED,
-]
-```
-
-##### 8. Add New Treatment Condition
-
-1. Define constant in the `C` class (around line 27):
-
-```python
-MEDIUM_SUGGESTED = "medium_suggested"
-MEDIUM_SUGGESTED_PRICE = 50
-```
-
-2. Add to treatment list in `creating_session()`:
-
-```python
-all_treatments = [
-    C.CONTROL,
-    C.HIGH_SUGGESTED,
-    C.MEDIUM_SUGGESTED,
-    C.LOW_SUGGESTED,
-    C.CONTROL,
-    C.MEDIUM_SUGGESTED,
-]
-```
-
-3. Update the `Decision` page logic (around line 269):
-
-```python
-suggested_price=(
-    C.HIGH_SUGGESTED_PRICE if player.group.treatment == C.HIGH_SUGGESTED
-    else C.MEDIUM_SUGGESTED_PRICE if player.group.treatment == C.MEDIUM_SUGGESTED
-    else C.LOW_SUGGESTED_PRICE
-)
-```
-
-##### 9. Modify Comprehension Questions
-
-**Location**: Lines 186-196 in the `Player` class
-
-To change questions or answers:
-
-```python
-comp_q1 = models.BooleanField(
-    label="Your new question text here.",
-    choices=[[True, "True"], [False, "False"]],
-)
-```
-
-Then update validation logic in `ComprehensionCheck` page (around line 228):
-
-```python
-def error_message(player: Player, values):
-    if values["comp_q1"] is not True or values["comp_q2"] is not False:  # Adjust expected answers
-        return "Error message..."
-```
-
-#### Advanced Customizations
-
-##### Change Page Sequence
-
-**Location**: Lines 302-310
-
-```python
-page_sequence = [
-    Introduction,
-    ComprehensionCheck,
-    Decision,
-    SellerInfo,
-    WaitForBuyer,
-    ResultsWaitPage,
-    Results,
-]
-```
-
-To add/remove/reorder pages, modify this list. Each page must have a corresponding class defined above.
-
-##### Modify Role Assignment Logic
-
-**Location**: Lines 122-142 in `creating_session()` function
-
-Current: Roles swap each round with no repeated pairings.
-
-To keep same roles throughout:
-
-```python
-# In round 1, assign roles
-if subsession.round_number == 1:
-    for i, player in enumerate(players):
-        role = C.BUYER_ROLE if i < half else C.SELLER_ROLE
-        player.participant.vars["fixed_role"] = role
-
-# All rounds use the fixed role
-def role(self):
-    return self.participant.vars.get("fixed_role", C.BUYER_ROLE)
-```
-
-#### Troubleshooting
-
-**Database Issues**:
-
-```powershell
-otree resetdb
-```
-
-**Port Already in Use**:
-
-```powershell
-otree devserver 8001  # Use different port
-```
-
-**Changes Not Appearing**:
-
-- Restart the oTree server
-- Hard refresh browser (Ctrl+F5)
-- Clear browser cache
-
-**Import Errors**:
-
-```powershell
-pip install --upgrade otree
-```
+Labels for the Likert scale questions are defined in the `labels` dictionary within this method to ensure they render correctly.
 
 #### Technology Stack
 
 - **Framework**: oTree 5.x
 - **Language**: Python 3.7+
-- **Frontend**: Bootstrap 4 (built into oTree)
+- **Frontend**: Bootstrap 4 (built into oTree), Custom HTML/CSS for specific formatting
 - **Database**: SQLite (development) / PostgreSQL (production recommended)
-- **Features**: Dynamic forms with JavaScript, responsive design
 
----
-
-## Additional Resources
-
-- **oTree Documentation**: https://otree.readthedocs.io/
-- **oTree Forum**: https://groups.google.com/g/otree
-- **Bootstrap Documentation**: https://getbootstrap.com/docs/4.6/
-
-For questions specific to this implementation, refer to the inline comments in `my_game/__init__.py`.
