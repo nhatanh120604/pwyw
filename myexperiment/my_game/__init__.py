@@ -358,7 +358,7 @@ class ComprehensionCheck(Page):
     def error_message(player: Player, values):
         """Validate comprehension check answers and show error with link to instructions if incorrect"""
         solutions = dict(
-            comp_q1=True,
+            comp_q1=False,
             comp_q2=False,
             comp_q3="a",
             comp_q4="c",
