@@ -4,7 +4,7 @@ SESSION_CONFIGS = [
     dict(
         name="pwyw_game",
         display_name="Pay-What-You-Want Game",
-        num_demo_participants=6,  # Changed to 6 for proper matching
+        num_demo_participants = 2,  
         app_sequence=["my_game"],
         doc="""
         Pay-What-You-Want pricing experiment with 6+ players.
