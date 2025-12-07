@@ -168,7 +168,7 @@ class Group(BaseGroup):
             buyer.payoff = C.BUYER_ENDOWMENT - self.price_paid + self.product_utility
             seller.payoff = self.price_paid - self.production_cost
         else:
-            # Buyer did not buy: both payoffs are 0
+            # Buyer did not buy: buyer keeps endowment, seller recieves 0
             buyer.payoff = C.BUYER_ENDOWMENT
             seller.payoff = 0
 
@@ -184,47 +184,47 @@ class Player(BasePlayer):
         choices=[[True, "True"], [False, "False"]],
     )
     comp_q3 = models.StringField(
-        label="3. What happens if the Buyer chooses NOT to buy Product A?",
+        label="What happens if the Buyer chooses NOT to buy Product A?",
         choices=[
-            ["a", "a) The Buyer keeps their endowment, and the Seller receives 0."],
-            ["b", "b) The Buyer pays a small penalty fee."],
-            ["c", "c) The Buyer receives the utility of the product anyway."],
-            ["d", "d) Both the Buyer and the Seller receive 0 for that round."],
+            ["a", "The Buyer keeps their endowment, and the Seller receives 0."],
+            ["b", "The Buyer pays a small penalty fee."],
+            ["c", "The Buyer receives the utility of the product anyway."],
+            ["d", "Both the Buyer and the Seller receive 0 for that round."],
         ],
         widget=widgets.RadioSelect,
     )
     comp_q4 = models.StringField(
-        label="4. Is it possible for the Seller to have a negative payoff in a round?",
+        label="Is it possible for the Seller to have a negative payoff in a round?",
         choices=[
-            ["a", "a) No, the Seller always makes a profit."],
-            ["b", "b) No, the lowest the Seller can earn is 0."],
-            ["c", "c) Yes, if the Buyer pays an amount lower than the production cost."],
-            ["d", "d) Yes, if the Buyer decides not to buy the product."],
+            ["a", "No, the Seller always makes a profit."],
+            ["b", "No, the lowest the Seller can earn is 0."],
+            ["c", "Yes, if the Buyer pays an amount lower than the production cost."],
+            ["d", "Yes, if the Buyer decides not to buy the product."],
         ],
         widget=widgets.RadioSelect,
     )
     comp_q5 = models.BooleanField(
-        label="5. The Seller starts every round with an endowment of 100 tokens.",
+        label="The Seller starts every round with an endowment of 100 tokens.",
         choices=[[True, "True"], [False, "False"]],
     )
     comp_q6 = models.StringField(
-        label="6. Regarding the information shown on screen, which of the following is correct?",
+        label="Regarding the information shown on screen, which of the following is correct?",
         choices=[
-            ["a", "a) The Buyer can see the Seller's production cost."],
-            ["b", "b) The Seller can see the Buyer's utility value."],
+            ["a", "The Buyer can see the Seller's production cost."],
+            ["b", "The Seller can see the Buyer's utility value."],
             [
                 "c",
-                "c) The Buyer sees their own utility, and the Seller sees their own production cost.",
+                "The Buyer sees their own utility, and the Seller sees their own production cost.",
             ],
             [
                 "d",
-                "d) The Buyer sees their own utility value and the Seller’s production cost.",
+                "The Buyer sees their own utility value and the Seller’s production cost.",
             ],
         ],
         widget=widgets.RadioSelect,
     )
     comp_q7 = models.BooleanField(
-        label="7. If the Buyer decides to buy the product, they receive the product at whatever price they pay.",
+        label="If the Buyer decides to buy the product, they receive the product at whatever price they pay.",
         choices=[[True, "True"], [False, "False"]],
     )
 
