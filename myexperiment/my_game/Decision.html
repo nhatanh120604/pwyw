@@ -20,7 +20,7 @@ block content }}
       <div class="card-body">
         <h5 class="card-title">Product Information</h5>
         <p>
-          Product A is a hypothetical product that gives you personal utility of
+          Product A is a hypothetical product that gives you a utility value of
           <strong>{{ utility }} tokens</strong>. The suggested price for this
           product, as set by the seller, is
           <strong>{{ suggested_price }} tokens</strong>.
@@ -43,7 +43,7 @@ block content }}
           <div class="card-body">
             <h5 class="card-title">Product Utility</h5>
             <p class="display-4 text-success">{{ utility }} tokens</p>
-            <small class="text-muted">Value you get from Product A</small>
+            <small class="text-muted">Value you get from purchasing Product A</small>
           </div>
         </div>
       </div>
@@ -52,16 +52,16 @@ block content }}
     <div class="card mt-3">
       <div class="card-body">
         <h5 class="card-title">Payoff Calculation</h5>
-        <p>If you choose to buy the product, you may receive the product at whatever price you pay:</p>
+        <p>If you decide to purchase the product, you will receive it regardless of the price you pay:</p>
         <ul>
           <li>
-            The SELLER receives the amount you choose to pay minus the production cost.
+            The SELLER receives the amount you choose to pay, minus the production cost.
           </li>
           <li>
             You receive any remaining endowment plus the utility value you derive from Product A.
           </li>
         </ul>
-        <p>If you choose to NOT buy the product:</p>
+        <p>If you decide NOT to purchase the product:</p>
         <ul>
           <li>The SELLER receives 0.</li>
           <li>You keep the endowment.</li>
@@ -71,7 +71,7 @@ block content }}
   </div>
 </div>
 
-<div class="card mt-4">
+<div class="alert alert-info mt-3">
   <div class="card-body">
     <h4>Make Your Decision</h4>
 

@@ -2,12 +2,12 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name="pwyw_game",
-        display_name="Pay-What-You-Want Game",
+        name="decision_making_game",
+        display_name="Decision-making in the absence of fixed prices",
         num_demo_participants = 2,  
         app_sequence=["my_game"],
         doc="""
-        Pay-What-You-Want pricing experiment with 6+ players.
+        Pricing experiment with 6+ players.
         Players are randomly matched each round (no repeats).
         Each participant sees treatments in randomized order.
         """,
