@@ -33,7 +33,7 @@ class C(BaseConstants):
 
     # Payment constants
     SHOW_UP_FEE = 100
-    CONVERSION_RATE = 500
+    CONVERSION_RATE = 200
 
 
 class Subsession(BaseSubsession):
@@ -137,11 +137,11 @@ def creating_session(subsession: Subsession):
         ]
         group.treatment = buyer_treatment
 
-        # Set utility value for buyer (randomized between 40-90)
-        group.product_utility = random.randint(40, 90)
+        # Set utility value for buyer (randomized between 15-45)
+        group.product_utility = random.randint(15, 45)
 
-        # Set production cost for seller (randomized between 20-60)
-        group.production_cost = random.randint(20, 60)
+        # Set production cost for seller (randomized between 1-30)
+        group.production_cost = random.randint(1, 30)
 
 
 class Group(BaseGroup):
@@ -228,60 +228,181 @@ class Player(BasePlayer):
         choices=[[True, "True"], [False, "False"]],
     )
 
+    # Consent Form Fields
+    consent_1 = models.BooleanField(
+        label="1. I have read and understood the Purpose of the Research.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_2 = models.BooleanField(
+        label="2. I have read and understood what I will be asked to do in the research.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_3 = models.BooleanField(
+        label="3. I have read and understood the potential Benefits to me.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_4 = models.BooleanField(
+        label="4. I have read and understood the potential Risks and Discomforts.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_5 = models.BooleanField(
+        label="5. I have read and understood that my participation is completely Voluntary.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_6 = models.BooleanField(
+        label="6. I have read and understood that my Withdrawal from the Study will not have any repercussion.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_7 = models.BooleanField(
+        label="7. I have read and understood the Data Collection method(s).",
+        widget=widgets.CheckboxInput,
+    )
+    consent_8 = models.BooleanField(
+        label="8. I have read and understood about the steps taken to ensure Confidentiality.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_9 = models.BooleanField(
+        label="9. I have read and understood that I can ask the research team to answer any Questions and concerns about the research and my participation.",
+        widget=widgets.CheckboxInput,
+    )
+    consent_10 = models.BooleanField(
+        label="10. I have read and understood that the research study has been approved by Fulbright University Vietnam’s Institutional Review Board (IRB).",
+        widget=widgets.CheckboxInput,
+    )
+    consent_final = models.BooleanField(
+        label="I have read and fully understood the contents of this form and had time to ask my questions, and hereby give my informed consent to the researchers and affirm my willingness to participate in the research described above in this form.",
+        widget=widgets.CheckboxInput,
+    )
+
     # Questionnaire Part 1
     q_fair_price = models.IntegerField(
         label="My price paid for the product was fair toward the seller.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_felt_good = models.IntegerField(
         label="I felt good about the price I paid.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_fair_to_seller = models.IntegerField(
         label="I paid a higher price because I wanted to be fair to the seller.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_guilty_low_price = models.IntegerField(
         label="Paying a low price would have made me feel guilty.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_reward_seller = models.IntegerField(
         label="I paid a higher amount to reward the seller for their generosity.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_obligated_fair = models.IntegerField(
         label="I felt obligated to pay a fair price because the seller trusted me.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_suggested_influenced = models.IntegerField(
         label="The suggested price influenced the amount I decided to pay.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_suggested_guide = models.IntegerField(
         label="I used the suggested price as a guide for what was appropriate to pay.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
     q_suggested_quality = models.IntegerField(
         label="I believe the suggested price reflects the true quality of the product.",
-        choices=[1, 2, 3, 4, 5, 6, 7],
+        choices=[
+            [1, "1 - Strongly Disagree"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"],
+            [7, "7 - Strongly Agree"],
+        ],
         widget=widgets.RadioSelectHorizontal,
     )
 
     # Questionnaire Part 2
     dem_sex = models.StringField(
         label="1. What is your sex?",
-        choices=["Male", "Female"],
+        choices=["Male", "Female", "Prefer not to say"],
         widget=widgets.RadioSelect,
     )
-    dem_age = models.IntegerField(label="2. How old are you?", min=18, max=100)
+    dem_age = models.StringField(
+        label="2. How old are you?",
+        choices=[str(i) for i in range(18, 31)] + ["30+", "Prefer not to say"],
+    )
     dem_employment = models.StringField(
         label="3. What is your current employment status? (Select all that apply)",
         blank=True,
@@ -294,6 +415,7 @@ class Player(BasePlayer):
             "10,000,000 - 15,000,000 VND",
             "15,000,000 - 20,000,000 VND",
             "> 20,000,000 VND",
+            "Prefer not to say",
         ],
         widget=widgets.RadioSelect,
     )
@@ -336,6 +458,32 @@ class Introduction(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
+
+
+class ConsentForm(Page):
+    form_model = "player"
+    form_fields = [
+        "consent_1",
+        "consent_2",
+        "consent_3",
+        "consent_4",
+        "consent_5",
+        "consent_6",
+        "consent_7",
+        "consent_8",
+        "consent_9",
+        "consent_10",
+        "consent_final",
+    ]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        import datetime
+        return dict(date_today=datetime.date.today().strftime("%Y-%m-%d"))
 
 
 class ComprehensionCheck(Page):
@@ -554,15 +702,19 @@ class ThankYou(Page):
         total_payment_vnd = total_tokens * C.CONVERSION_RATE
 
         return dict(
+            participant_id=player.participant.code,
             selected_round_number=selected_round.round_number,
             payoff_selected_round=payoff_selected_round,
             show_up_fee=C.SHOW_UP_FEE,
+            show_up_fee_vnd=f"{C.SHOW_UP_FEE * C.CONVERSION_RATE:,.0f}",
+            earnings_from_round_vnd=f"{payoff_selected_round * C.CONVERSION_RATE:,.0f}",
             total_tokens=total_tokens,
             total_payment_vnd=f"{total_payment_vnd:,.0f}",
         )
 
 
 page_sequence = [
+    ConsentForm,
     Introduction,
     ComprehensionCheck,
     Decision,

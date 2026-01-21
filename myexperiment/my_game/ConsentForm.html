@@ -1,0 +1,87 @@
+{{ block title }}Informed Consent Form{{ endblock }}
+{{ block content }}
+
+<style>
+    .consent-box {
+        margin-bottom: 20px;
+    }
+    .final-consent {
+        background-color: #fff3cd; /* Light yellow background */
+        padding: 15px;
+        border: 1px solid #ffeeba;
+        border-radius: 5px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .list-group-item {
+        border: none;
+        padding-left: 0;
+    }
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <p><strong>Date:</strong> {{ date_today }}</p>
+        <p><strong>Title of research:</strong> Decision-making in the absence of fixed prices</p>
+        <p><strong>Researcher:</strong> Le Vo Thanh Tam – 105 Ton Dat Tien, Tan My ward, Ho Chi Minh City – tam.le.210264@student.fulbright.edu.vn</p>
+
+        <ol>
+            <li>
+                <strong>Purpose of the Research:</strong> This research aims to explore a participative pricing strategy, a topic at the intersection of economics, consumer behavior and game theory. It examines how individual make economic decision in context, and provide insights that help firms and organizations choose effective strategies for implementing participative pricing in real-world settings.
+            </li>
+            <li>
+                <strong>What You Will Be Asked to do in the Research:</strong> You are about to participate in a multi-round economic game where you will interact with another anonymous participant to trade a hypothetical product. The game requires you to make purchasing and pricing decisions based on your assigned role and specific pricing conditions. After completing all rounds, you will answer a brief questionnaire that includes demographic questions and self-reported measures on a seven-point Likert scale. The entire session is expected to take approximately 60 minutes.
+            </li>
+            <li>
+                <strong>Benefits to you:</strong> Taking part in this study may not have direct benefits to you, but it will help me learn the behavior in interactive pricing settings. You will receive monetary compensation based on their decisions in the experiment plus the show-up fee to thank for your participation.
+            </li>
+            <li>
+                <strong>Risks and Discomforts:</strong> We do not foresee any risks or discomfort from your participation in the research.
+            </li>
+            <li>
+                <strong>Voluntary Participation:</strong> Participation in this study is completely voluntary. Choosing to not participate in the study will not affect the treatment you may be receiving, your relationships with the researchers or study staff, or nature of your relationship with Fulbright University Vietnam now or in the future.
+            </li>
+            <li>
+                <strong>Withdrawal from the Study:</strong> You may choose to stop participation at any point, for any reason, during the study. If you choose to stop participating, you will still be eligible to receive the promised reward for agreeing to participate. Your decision to stop participation, or refusal to answer particular questions, will not affect your relationship with the researchers, research staff, Fulbright University Vietnam, or any other group associated with this project. In the event that you withdraw from the study, all data collected will be destroyed.
+            </li>
+            <li>
+                <strong>Data Collection Method:</strong> Information for this study will be collected anonymously through oTree web-based behavioral experimental platform where you will be asked to make decision in hypothetical situation and self-reported survey.
+            </li>
+            <li>
+                <strong>Confidentiality:</strong>
+                <br>This study will not collect any personally identifying information from you.
+                <br>All information collected for research purposes will be encrypted and stored in a password-protected file on a password-protected computer. Backup data will be stored on a password-protected hard drive, which will be kept in a locked cabinet and accessible to only the researchers.
+                <br>All information including research and personally identifying data will be stored for 3 years and destroyed at the end of that period.
+            </li>
+            <li>
+                <strong>Questions about the Research:</strong> If you have any questions about the research in general or your role in the research, please contact Le Vo Thanh Tam by telephone at 0984787545, or by e-mail at tam.le.210264@student.fulbright.edu.vn, or contact the faculty advisor Dr. Nguyen Thi Hoang Lan at hoanglan.nguyen@fulbright.edu.vn. This research has been reviewed and approved by the Institutional Review Board of Fulbright University Vietnam. If any questions about this process or your rights as a participant in this study arise, or feel that you are at risk, please contact the Chair of the Institutional Review Board at irb@fulbright.eu.vn.
+            </li>
+        </ol>
+
+        <p>Please check the box to indicate your understanding of each item.</p>
+
+        <div class="consent-box">
+            {{ formfield 'consent_1' }}
+            {{ formfield 'consent_2' }}
+            {{ formfield 'consent_3' }}
+            {{ formfield 'consent_4' }}
+            {{ formfield 'consent_5' }}
+            {{ formfield 'consent_6' }}
+            {{ formfield 'consent_7' }}
+            {{ formfield 'consent_8' }}
+            {{ formfield 'consent_9' }}
+            {{ formfield 'consent_10' }}
+        </div>
+
+        <div class="final-consent">
+            {{ formfield 'consent_final' }}
+        </div>
+
+        <div class="mt-4">
+            {{ next_button }}
+        </div>
+
+    </div>
+</div>
+
+{{ endblock }}

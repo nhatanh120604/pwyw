@@ -2,25 +2,44 @@
 
 <div class="card">
   <div class="card-body">
-    <h3 class="text-primary mb-4">Thank You for Your Participation!</h3>
     <p>
-      Thank you for participating in our study. Your decision data has been
-      securely saved.
+      Thank you for participating in our study. Your decision data has been securely saved.
+    </p>
+    <p>
+      This study examines decision-making under a Pay-What-You-Want (PWYW) pricing
+      mechanism, where participants are allowed to choose any amount to pay for a
+      product. The primary research question of this study is “Decision-making in
+      the absence of fixed prices: How does disclosing a suggested price influence
+      customer willingness-to-pay in pay-what-you-want?”. The study was
+      initially presented under a general research title, and the specific PWYW
+      mechanism was not explicitly mentioned beforehand. This was necessary to
+      ensure that participants made decisions without being influenced by prior
+      expectations of the pricing model. Your data will now help us understand the
+      psychological drivers behind voluntary payments.
+    </p>
+    <p>
+      If you have any questions about the research in general or your role in the
+      research, please contact Le Vo Thanh Tam by telephone at 0984787545, or by
+      e-mail at tam.le.210264@student.fulbright.edu.vn, or contact the faculty
+      advisor Dr. Nguyen Thi Hoang Lan at hoanglan.nguyen@fulbright.edu.vn.
     </p>
 
-    <div class="alert alert-info mt-4">
-      <p>
-        Based on the randomly selected round (Round {{ selected_round_number }})
-        and your decisions, your total earnings have been calculated as follows:
-      </p>
-      <h4 class="text-center mt-3">
-        Total Payment: <br />
-        <span class="text-success fw-bold">{{ total_payment_vnd }} VND</span>
-      </h4>
-      <p class="text-center text-muted fst-italic">
-        (Including Show-up Fee plus Payoff from Selected Round)
-      </p>
-    </div>
+    <h4 class="mt-4">Compensation information</h4>
+    <p>
+      Your anonymous participant ID is: <strong>{{ participant_id }}</strong>
+    </p>
+    <p>Please note this ID to claim your compensation.</p>
+    <p>
+      Based on a randomly selected round and your decisions, your total earnings
+      have been calculated as follows:
+    </p>
+    <ul>
+      <li>Show-up fee: {{ show_up_fee_vnd }} VND</li>
+      <li>Earnings from the selected round: {{ earnings_from_round_vnd }} VND</li>
+      <li><strong>Total payment: {{ total_payment_vnd }} VND</strong></li>
+    </ul>
+
+    <hr />
 
     <p class="mt-4">
       Please enter your banking details below so we can process your transfer.
