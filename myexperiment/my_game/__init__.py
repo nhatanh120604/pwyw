@@ -428,19 +428,6 @@ class Player(BasePlayer):
         label="(If Yes) What do you usually call this pricing strategy?", blank=True
     )
 
-    # Banking Information
-    bank_name = models.StringField(
-        label="Bank Name:",
-        blank=False,
-    )
-    account_number = models.StringField(
-        label="Account Number:",
-        blank=False,
-    )
-    account_holder_name = models.StringField(
-        label="Account Holder Name:",
-        blank=False,
-    )
 
     def role(self):
         """Return the role for this player in current round"""
@@ -672,7 +659,7 @@ class Questionnaire(Page):
 
 class ThankYou(Page):
     form_model = "player"
-    form_fields = ["bank_name", "account_number", "account_holder_name"]
+    # form_fields = ["bank_name", "account_number", "account_holder_name"]
 
     @staticmethod
     def is_displayed(player: Player):
