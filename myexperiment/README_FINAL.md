@@ -18,7 +18,7 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 #### Buyer
 
 - **Starting endowment**: 100 tokens
-- **Product utility**: Randomly assigned each round (40-90 tokens) - the value the product provides
+- **Product utility**: Randomly assigned each round (15-45 tokens) - the value the product provides
 - **Decision**: Choose whether to buy the product, and if yes, how much to pay (0-100 tokens)
 - **Payoff calculation**:
   - If bought: 100 - amount_paid + product_utility
@@ -27,7 +27,7 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 #### Seller
 
 - **Starting endowment**: 0 tokens
-- **Production cost**: Randomly assigned each round (20-60 tokens)
+- **Production cost**: Randomly assigned each round (1-30 tokens)
 - **No active decisions**: Waits for buyer's choice
 - **Payoff calculation**:
   - If buyer bought: amount_paid - production_cost
@@ -47,7 +47,8 @@ Note: Suggested prices are advisory only; buyers can choose any amount.
 
 **Round 1 Only:**
 
-1. **Introduction**: Complete instructions for both roles.
+1. **Consent Form**: In-depth informed consent with mandatory checkboxes.
+2. **Introduction**: Complete instructions for both roles.
    - Includes detailed payoff explanations with bullet points for clarity.
    - Uses neutral styling with black text for readability.
 2. **Comprehension Check**: Seven questions to verify understanding.
@@ -74,7 +75,7 @@ Note: Suggested prices are advisory only; buyers can choose any amount.
 
 - **Complete information**: Both buyer and seller know the product utility and production cost
 - **Transparency**: All payoff formulas are explained upfront
-- **Fair compensation**: One random round will be selected at the end for actual payment (100 tokens = 50,000 VND) + Show-up fee (100 tokens).
+- **Fair compensation**: One random round will be selected at the end for actual payment (100 tokens = 20,000 VND) + Show-up fee (20,000 VND).
 
 ---
 
@@ -197,16 +198,19 @@ After running a session:
 
 For running actual experiment sessions:
 
-```powershell
-# Set admin password
-set OTREE_ADMIN_PASSWORD=YourSecurePassword
+```bash
+# Set admin password (Linux/macOS use export, Windows uses set)
+export OTREE_ADMIN_PASSWORD=YourSecurePassword
 
 # Enable production mode
-set OTREE_PRODUCTION=1
+export OTREE_PRODUCTION=1
 
-# Run production server (port 80 for standard web access)
-otree prodserver 80
-```
+# Run production server on port 8000 (Recommended for testing, no root required)
+otree prodserver 8000
+
+# OR run on port 80 (Standard web port, requires sudo/root permissions)
+# sudo -E env "PATH=$PATH" otree prodserver 80
+```chec
 
 ---
 
@@ -218,6 +222,7 @@ otree prodserver 80
 myexperiment/
 ├── my_game/
 │   ├── __init__.py              # Main game logic (Models, Pages, Payoff logic)
+│   ├── ConsentForm.html         # Informed consent page (added)
 │   ├── Introduction.html        # Instructions (round 1 only)
 │   ├── ComprehensionCheck.html  # Comprehension test (round 1 only)
 │   ├── Decision.html            # Buyer decision page
