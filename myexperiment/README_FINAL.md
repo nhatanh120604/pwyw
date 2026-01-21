@@ -207,14 +207,49 @@ export OTREE_PRODUCTION=1
 
 # Run production server on port 8000 (Recommended for testing, no root required)
 otree prodserver 8000
-
 # OR run on port 80 (Standard web port, requires sudo/root permissions)
 # sudo -E env "PATH=$PATH" otree prodserver 80
 ```chec
 
 ---
 
-### Part B: Customization and Parameters
+### Part B: Remote Access & Professional Deployment
+
+To allow participants to join from their own devices (remote or classroom), use **ngrok** and **oTree Rooms**.
+
+#### 1. Public Access with ngrok
+
+Since the server runs on `localhost`, others cannot see it. `ngrok` solves this by creating a secure public URL.
+
+1.  **Download ngrok**: [https://ngrok.com/download](https://ngrok.com/download)
+2.  **Start your oTree server** (Terminal 1):
+    ```bash
+    export OTREE_ADMIN_PASSWORD=123
+    export OTREE_PRODUCTION=1
+    otree prodserver 8000
+    ```
+3.  **Start ngrok** (Terminal 2):
+    ```bash
+    ngrok http 8000
+    ```
+4.  **Copy the Forwarding URL**: ngrok will give you a URL like `https://random-name.ngrok-free.app`. Use this instead of `localhost:8000`.
+
+#### 2. Professional Workflow (Using Rooms)
+
+Instead of sending unique links to every person, use the configured **Room** for a single, permanent link.
+
+1.  **Send the Link**: Share the room URL with all participants:
+    `https://<your-ngrok-url>.ngrok-free.app/room/fulbright_lab`
+2.  **Waiting Room**: Participants clicking the link will wait in a lobby.
+3.  **Launch**:
+    - Go to your Admin Panel > **Rooms** > **Fulbright Experiment Lab**.
+    - You will see a list of waiting participants.
+    - Click **Create Session**.
+    - Everyone is automatically pulled into the game.
+
+---
+
+### Part C: Customization and Parameters
 
 #### File Structure
 

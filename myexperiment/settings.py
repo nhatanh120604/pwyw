@@ -4,13 +4,20 @@ SESSION_CONFIGS = [
     dict(
         name="decision_making_game",
         display_name="Decision-making in the absence of fixed prices",
-        num_demo_participants = 2,  
+        num_demo_participants = 2,
         app_sequence=["my_game"],
         doc="""
         Pricing experiment with 6+ players.
         Players are randomly matched each round (no repeats).
         Each participant sees treatments in randomized order.
         """,
+    ),
+]
+
+ROOMS = [
+    dict(
+        name="fulbright_lab",
+        display_name="Fulbright Experiment Lab",
     ),
 ]
 
