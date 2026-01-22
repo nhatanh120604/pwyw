@@ -8,40 +8,41 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 
 ### Game Structure
 
-**Duration**: 2 rounds total (configurable)
-**Players per round**: 2 (one Buyer, one Seller)
-**Role assignment**: Roles swap between rounds so each participant experiences both perspectives
-**No repeated pairings**: Participants are matched with different partners across rounds
+### Game Structure
 
-### Player Roles
+ **Duration**: 18 rounds total (6 configs × 3 repeats)
+ **Players per round**: 2 (one Buyer, one Seller)
+ **Role assignment**: Strict Balancing. In every block of 6 rounds, each player is assigned the Buyer role exactly 3 times and the Seller role exactly 3 times. Matching is random within these constraints.
 
-#### Buyer
+ ### Player Roles
 
-- **Starting endowment**: 100 tokens
-- **Product utility**: Randomly assigned each round (15-45 tokens) - the value the product provides
-- **Decision**: Choose whether to buy the product, and if yes, how much to pay (0-100 tokens)
-- **Payoff calculation**:
-  - If bought: 100 - amount_paid + product_utility
-  - If not bought: 100 (Buyer keeps endowment)
+ #### Buyer
 
-#### Seller
+ - **Starting endowment**: 100 tokens
+ - **Product utility**: Randomly assigned each round (15-45 tokens) - the value the product provides
+ - **Decision**: Choose whether to buy the product, and if yes, how much to pay (0-100 tokens)
+ - **Payoff calculation**:
+   - If bought: 100 - amount_paid + product_utility
+   - If not bought: 100 (Buyer keeps endowment)
 
-- **Starting endowment**: 0 tokens
-- **Production cost**: Randomly assigned each round (1-30 tokens)
-- **No active decisions**: Waits for buyer's choice
-- **Payoff calculation**:
-  - If buyer bought: amount_paid - production_cost
-  - If buyer didn't buy: 0
+ #### Seller
 
-### Treatment Conditions
+ - **Starting endowment**: 0 tokens
+ - **Production cost**: Randomly assigned each round (1-30 tokens)
+ - **No active decisions**: Waits for buyer's choice
+ - **Payoff calculation**:
+   - If buyer bought: amount_paid - production_cost
+   - If buyer didn't buy: 0
 
-The experiment includes three pricing conditions, randomized for each participant:
+ ### Treatment Conditions
 
-1. **Control**: No suggested price shown
-2. **High Suggested Price**: Suggested price of 70 tokens displayed
-3. **Low Suggested Price**: Suggested price of 30 tokens displayed
+ The experiment includes three pricing conditions. Every participant encounters each condition exactly 6 times (3 as Buyer, 3 as Seller):
 
-Note: Suggested prices are advisory only; buyers can choose any amount.
+ 1. **Control**: No suggested price shown.
+ 2. **High Suggested Price**: Suggested price = `1.5 * Production Cost`.
+ 3. **Low Suggested Price**: Suggested price = `Production Cost`.
+
+ Note: Suggested prices are calculated dynamically based on the round's random production cost.
 
 ### Participant Experience Flow
 

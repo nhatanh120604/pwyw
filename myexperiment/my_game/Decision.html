@@ -21,10 +21,15 @@ block content }}
         <h5 class="card-title">Product Information</h5>
         <p>
           Product A is a hypothetical product that gives you a utility value of
-          <strong>{{ utility }} tokens</strong>. The suggested price for this
-          product, as set by the seller, is
-          <strong>{{ suggested_price }} tokens</strong>.
+          <strong>{{ utility }} tokens</strong>.
         </p>
+
+        {{ if group.suggested_price }}
+        <p>
+          The suggested price for this product, as set by the seller, is
+          <strong>{{ group.suggested_price }} tokens</strong>.
+        </p>
+        {{ endif }}
       </div>
     </div>
 

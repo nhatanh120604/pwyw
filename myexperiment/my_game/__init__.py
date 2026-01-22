@@ -12,7 +12,7 @@ The Seller receives payment minus production cost.
 class C(BaseConstants):
     NAME_IN_URL = "my_game"
     PLAYERS_PER_GROUP = None  # Will vary each round
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 18
 
     # Roles
     BUYER_ROLE = "Buyer"
@@ -28,8 +28,7 @@ class C(BaseConstants):
     LOW_SUGGESTED = "low_suggested"
 
     # Suggested prices
-    HIGH_SUGGESTED_PRICE = 70
-    LOW_SUGGESTED_PRICE = 30
+    # Dynamic now, calculated in creating_session
 
     # Payment constants
     SHOW_UP_FEE = 100
@@ -47,78 +46,91 @@ def creating_session(subsession: Subsession):
     - Re-match players each round (no repeats)
     - Equal buyers and sellers each round
     """
+    # --- 1. SESSION LEVEL SETUP (Round 1 only) ---
     if subsession.round_number == 1:
-        # Define all treatment conditions
-        all_treatments = [
-            C.CONTROL,
-            C.CONTROL,
-            C.HIGH_SUGGESTED,
-            C.HIGH_SUGGESTED,
-            C.LOW_SUGGESTED,
-            C.LOW_SUGGESTED,
-        ]
+        # A. Treatment Randomization (Existing)
+        # Define all treatment conditions (6 rounds x 3 repeats = 18 rounds)
+        # Each block of 6 has: 2 Control, 2 Low, 2 High
+        one_block = [C.CONTROL] * 2 + [C.HIGH_SUGGESTED] * 2 + [C.LOW_SUGGESTED] * 2
+        all_treatments = one_block * 3
 
-        # Each participant gets a randomized order of treatments
-        for participant in subsession.session.get_participants():
-            shuffled = all_treatments.copy()
-            random.shuffle(shuffled)
-            participant.vars["treatment_order"] = shuffled
+        # EACH participant gets a randomized order of treatments
+        # Also assign Rule Groups (A and B) for Role Balancing here
+        participants = subsession.session.get_participants()
+        random.shuffle(participants) # Shuffle to randomize who gets into Group A vs B
 
-            # Track who they've been paired with
-            participant.vars["previous_partners"] = []
+        mid_point = len(participants) // 2
 
+        for i, p in enumerate(participants):
+            # 1. Treatment Order
+            shuffled_treatments = all_treatments.copy()
+            random.shuffle(shuffled_treatments)
+            p.vars["treatment_order"] = shuffled_treatments
 
-    # Get all players for this round
-    players = subsession.get_players()
-    num_players = len(players)
+            # 2. Role Group Assignment (Strict Balance)
+            # First half is Group A, Second half is Group B
+            if i < mid_point:
+                p.vars['role_group'] = 'A'
+            else:
+                p.vars['role_group'] = 'B'
 
-    # Need even number of players
-    if num_players % 2 != 0:
-        raise ValueError(f"Need even number of participants. Got {num_players}")
+        # B. Generate Role Schedule for the Session
+        # 0 = Group A is Buyer (Group B is Seller)
+        # 1 = Group B is Buyer (Group A is Seller)
+        # Constraint: In every 6 rounds, exactly 3 are '0' and 3 are '1'
+        role_schedule = []
+        for _ in range(3): # 3 Blocks
+            # Create balanced block [0,0,0, 1,1,1]
+            block = [0, 0, 0, 1, 1, 1]
+            random.shuffle(block)
+            role_schedule.extend(block)
 
-    # Shuffle players for random matching
-    random.shuffle(players)
+        subsession.session.vars['role_schedule'] = role_schedule
 
-    # Split into two equal groups: buyers and sellers
-    half = num_players // 2
-    potential_buyers = players[:half]
-    potential_sellers = players[half:]
+        # C. Select Common Paying Round
+        # Select ONE round (1 to 18) that determines payment for EVERYONE
+        paying_round = random.randint(1, C.NUM_ROUNDS)
+        subsession.session.vars['paying_round'] = paying_round
 
-    # Try to create pairs avoiding previous partners
-    pairs = []
-    used_sellers = set()
+    # --- 2. MATCHING LOGIC (Every Round) ---
 
-    for buyer in potential_buyers:
-        previous_partners = buyer.participant.vars.get("previous_partners", [])
+    # Who is the Buyer this round? (Group A or Group B)
+    # round_number is 1-indexed, so subtract 1
+    current_round_config = subsession.session.vars['role_schedule'][subsession.round_number - 1]
+    is_group_A_buyer = (current_round_config == 0)
 
-        # Find a seller this buyer hasn't been paired with
-        for seller in potential_sellers:
-            if (
-                seller.participant.id_in_session not in previous_partners
-                and seller.participant.id_in_session not in used_sellers
-            ):
-                pairs.append((buyer, seller))
-                used_sellers.add(seller.participant.id_in_session)
+    # Separate players into Buyers and Sellers list
+    buyers = []
+    sellers = []
 
-                # Record the pairing
-                buyer.participant.vars["previous_partners"].append(
-                    seller.participant.id_in_session
-                )
-                seller.participant.vars.setdefault("previous_partners", []).append(
-                    buyer.participant.id_in_session
-                )
-                break
-        else:
-            # If can't avoid repeats (shouldn't happen in 6 rounds with enough players)
-            # Just pair with any available seller
-            for seller in potential_sellers:
-                if seller.participant.id_in_session not in used_sellers:
-                    pairs.append((buyer, seller))
-                    used_sellers.add(seller.participant.id_in_session)
-                    break
+    for p in subsession.get_players():
+        # Get their assigned group
+        p_group = p.participant.vars['role_group']
 
-    # Create groups from pairs
-    group_matrix = [[buyer, seller] for buyer, seller in pairs]
+        if is_group_A_buyer:
+            if p_group == 'A':
+                buyers.append(p)
+            else:
+                sellers.append(p)
+        else: # Group B is Buyer
+            if p_group == 'B':
+                buyers.append(p)
+            else:
+                sellers.append(p)
+
+    # Basic validation
+    if len(buyers) != len(sellers):
+        raise ValueError("Error: Uneven number of buyers and sellers. Ensure even number of participants.")
+
+    # Randomize the matching within the groups
+    random.shuffle(buyers)
+    random.shuffle(sellers)
+
+    # Pair them up
+    group_matrix = []
+    for b, s in zip(buyers, sellers):
+        group_matrix.append([b, s])
+
     subsession.set_group_matrix(group_matrix)
 
     # Assign roles and treatments for each group
@@ -143,11 +155,20 @@ def creating_session(subsession: Subsession):
         # Set production cost for seller (randomized between 1-30)
         group.production_cost = random.randint(1, 30)
 
+        # Calculate Suggested Price
+        if group.treatment == C.CONTROL:
+            group.suggested_price = None
+        elif group.treatment == C.LOW_SUGGESTED:
+            group.suggested_price = group.production_cost
+        elif group.treatment == C.HIGH_SUGGESTED:
+            group.suggested_price = round(1.5 * group.production_cost)
+
 
 class Group(BaseGroup):
     treatment = models.StringField()
     product_utility = models.IntegerField()
     production_cost = models.IntegerField()
+    suggested_price = models.IntegerField(blank=True)
     buyer_decision = models.BooleanField(
         label="Do you want to buy Product A?", choices=[[True, "Yes"], [False, "No"]]
     )
@@ -667,12 +688,11 @@ class ThankYou(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        # Select a random round for payment
-        # We use the participant's ID to seed the random choice so it's consistent if they refresh
-        # But here we just need to pick one.
-        # Let's pick a random round from all rounds played by this participant
-        all_rounds = player.in_all_rounds()
-        selected_round = random.choice(all_rounds)
+        # Retrieve the common paying round selected in creating_session
+        selected_round_number = player.session.vars['paying_round']
+
+        # Get the player object for that specific round
+        selected_round = player.in_round(selected_round_number)
 
         payoff_selected_round = selected_round.payoff or 0
 
