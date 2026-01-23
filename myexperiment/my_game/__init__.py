@@ -184,13 +184,29 @@ class Group(BaseGroup):
         buyer = [p for p in self.get_players() if p.role() == C.BUYER_ROLE][0]
         seller = [p for p in self.get_players() if p.role() == C.SELLER_ROLE][0]
 
+        # Calculate potential payoffs logic
         if self.buyer_decision and self.price_paid is not None:
             # Buyer bought the product
-            buyer.payoff = C.BUYER_ENDOWMENT - self.price_paid + self.product_utility
-            seller.payoff = self.price_paid - self.production_cost
+            buyer_val = C.BUYER_ENDOWMENT - self.price_paid + self.product_utility
+            seller_val = self.price_paid - self.production_cost
         else:
-            # Buyer did not buy: buyer keeps endowment, seller recieves 0
-            buyer.payoff = C.BUYER_ENDOWMENT
+            # Buyer did not buy
+            buyer_val = C.BUYER_ENDOWMENT
+            seller_val = 0
+
+        # Store potential payoff for data analysis
+        buyer.potential_payoff = buyer_val
+        seller.potential_payoff = seller_val
+
+        # ONLY set the official player.payoff if this is the chosen paying round
+        # This ensures the "Total Payments" in admin interface is correct strategy-wise
+        paying_round = self.session.vars.get('paying_round')
+
+        if self.round_number == paying_round:
+            buyer.payoff = buyer_val
+            seller.payoff = seller_val
+        else:
+            buyer.payoff = 0
             seller.payoff = 0
 
 
@@ -248,6 +264,9 @@ class Player(BasePlayer):
         label="If the Buyer decides to buy the product, they receive the product at whatever price they pay.",
         choices=[[True, "True"], [False, "False"]],
     )
+
+    # For data analysis: store the payoff this player WOULD have gotten in this round
+    potential_payoff = models.CurrencyField()
 
     # Consent Form Fields
     consent_1 = models.BooleanField(
@@ -562,11 +581,7 @@ class Decision(Page):
             utility=player.group.product_utility,
             production_cost=player.group.production_cost,
             treatment=player.group.treatment,
-            suggested_price=(
-                C.HIGH_SUGGESTED_PRICE
-                if player.group.treatment == C.HIGH_SUGGESTED
-                else C.LOW_SUGGESTED_PRICE
-            ),
+            suggested_price=player.group.field_maybe_none("suggested_price"),
         )
 
 
