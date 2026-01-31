@@ -542,9 +542,14 @@ class ComprehensionCheck(Page):
             comp_q7=True,
         )
 
-        if values != solutions:
+        num_wrong = 0
+        for key, answer in solutions.items():
+            if values[key] != answer:
+                num_wrong += 1
+
+        if num_wrong > 0:
             return (
-                "One or more answers are incorrect. "
+                f"You have {num_wrong} incorrect answer(s). "
                 'Please <a href="#" id="showInstructionsLink">review the instructions</a> and try again.'
                 "<script>setTimeout(function(){var l=document.getElementById('showInstructionsLink');if(l){l.onclick=function(e){e.preventDefault();var c=document.getElementById('instructionsCollapse');if(c){c.classList.add('show');c.scrollIntoView({behavior:'smooth'});}}}},0);</script>"
             )
@@ -624,8 +629,8 @@ class Results(Page):
             price_paid=price_paid,
             utility=player.group.product_utility,
             production_cost=player.group.production_cost,
-            buyer_payoff=buyer.payoff,
-            seller_payoff=seller.payoff,
+            buyer_payoff=buyer.potential_payoff,
+            seller_payoff=seller.potential_payoff,
             endowment=(
                 C.BUYER_ENDOWMENT
                 if player.role() == C.BUYER_ROLE
@@ -723,6 +728,18 @@ class ThankYou(Page):
 
         total_payment_vnd = total_tokens * C.CONVERSION_RATE
 
+        # Fetch history for the table
+        history = []
+        for p in player.in_all_rounds():
+            history.append(
+                dict(
+                    round_number=p.round_number,
+                    role=p.role(),
+                    payoff=p.potential_payoff,
+                    is_selected=(p.round_number == selected_round_number),
+                )
+            )
+
         return dict(
             participant_id=player.participant.code,
             selected_round_number=selected_round.round_number,
@@ -732,6 +749,7 @@ class ThankYou(Page):
             earnings_from_round_vnd=f"{payoff_selected_round * C.CONVERSION_RATE:,.0f}",
             total_tokens=total_tokens,
             total_payment_vnd=f"{total_payment_vnd:,.0f}",
+            history=history,
         )
 
 

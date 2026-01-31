@@ -37,7 +37,7 @@ block content }}
         <div class="card bg-light">
           <div class="card-body">
             <h5 class="card-title">Amount Paid</h5>
-            <p class="display-4 text-primary">{{ price_paid }} tokens</p>
+            <p class="display-4 text-primary"><span class="count-up" data-value="{{ price_paid }}">0</span> tokens</p>
           </div>
         </div>
       </div>
@@ -54,15 +54,15 @@ block content }}
       <div class="card-body">
         <h5 class="text-primary">Buyer's Payoff</h5>
         {{ if buyer_decision }}
-        <p>Initial endowment: {{ endowment }} tokens</p>
-        <p>Amount paid: -{{ price_paid }} tokens</p>
-        <p>Product utility: +{{ utility }} tokens</p>
+        <p>Initial endowment: <span class="count-up" data-value="{{ endowment }}">0</span> tokens</p>
+        <p>Amount paid: -<span class="count-up" data-value="{{ price_paid }}">0</span> tokens</p>
+        <p>Product utility: +<span class="count-up" data-value="{{ utility }}">0</span> tokens</p>
         <hr />
-        <p class="display-4 text-primary">{{ player.payoff }} tokens</p>
+        <p class="display-4 text-primary"><span class="count-up" data-value="{{ buyer_payoff }}">0</span> tokens</p>
         {{ else }}
         <p>No purchase was made</p>
         <hr />
-        <p class="display-4 text-primary">{{ player.payoff }} tokens</p>
+        <p class="display-4 text-primary"><span class="count-up" data-value="{{ buyer_payoff }}">0</span> tokens</p>
         {{ endif }}
       </div>
     </div>
@@ -71,14 +71,14 @@ block content }}
       <div class="card-body">
         <h5 class="text-success">Seller's Payoff</h5>
         {{ if buyer_decision }}
-        <p>Amount received: {{ price_paid }} tokens</p>
-        <p>Production cost: -{{ production_cost }} tokens</p>
+        <p>Amount received: <span class="count-up" data-value="{{ price_paid }}">0</span> tokens</p>
+        <p>Production cost: -<span class="count-up" data-value="{{ production_cost }}">0</span> tokens</p>
         <hr />
-        <p class="display-4 text-success">{{ player.payoff }} tokens</p>
+        <p class="display-4 text-success"><span class="count-up" data-value="{{ seller_payoff }}">0</span> tokens</p>
         {{ else }}
         <p>No sale was made</p>
         <hr />
-        <p class="display-4 text-success">{{ player.payoff }} tokens</p>
+        <p class="display-4 text-success"><span class="count-up" data-value="{{ seller_payoff }}">0</span> tokens</p>
         {{ endif }}
       </div>
     </div>
@@ -107,5 +107,43 @@ block content }}
 {{ endif }}
 
 <div class="mt-4">{{ next_button }}</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const duration = 2000; // 2 seconds
+        const elements = document.querySelectorAll('.count-up');
+
+        elements.forEach(el => {
+            const target = parseInt(el.dataset.value);
+            if (isNaN(target)) {
+                el.innerText = el.dataset.value;
+                return;
+            }
+
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out cubic
+                const ease = 1 - Math.pow(1 - progress, 3);
+
+                const current = Math.floor(ease * target);
+                el.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target;
+                }
+            }
+
+            requestAnimationFrame(update);
+        });
+    });
+</script>
 
 {{ endblock }}
