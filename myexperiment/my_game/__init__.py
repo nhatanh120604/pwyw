@@ -735,7 +735,7 @@ class ThankYou(Page):
                 dict(
                     round_number=p.round_number,
                     role=p.role(),
-                    payoff=p.potential_payoff,
+                    payoff=int(p.potential_payoff),
                     is_selected=(p.round_number == selected_round_number),
                 )
             )
