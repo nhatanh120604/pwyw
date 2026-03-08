@@ -84,76 +84,48 @@ This is an experimental economics study implementing a Pay-What-You-Want (PWYW) 
 
 ### Part A: Running and Testing
 
-#### Installation and Setup
+#### Installation and Setup (Local with PostgreSQL)
 
-1. **Install oTree** (if not already installed):
-
-```powershell
-pip install otree
+**1. Set up PostgreSQL Database**
+Ensure PostgreSQL is installed on your system. 
+Access PostgreSQL as an administrator and run:
+```sql
+CREATE DATABASE otree_db;
+CREATE USER otree_user WITH PASSWORD '123';
+GRANT ALL PRIVILEGES ON DATABASE otree_db TO otree_user;
+ALTER DATABASE otree_db OWNER TO otree_user;
 ```
 
-2. **Navigate to the project directory**:
-
-```powershell
-cd "your_path_here\pwyw\myexperiment"
+**2. Install Python Dependencies**
+Navigate to your project directory and install the required packages (including oTree and the PostgreSQL adapter):
+```bash
+pip install -r requirements.txt
 ```
 
-3. **Initialize the database** (first time only, or after model changes):
+**3. Configure Environment Variables**
+A `.env` file in the root of your project manages configuration. Make sure you have a `.env` file containing:
+```env
+DATABASE_URL="postgres://otree_user:123@localhost/otree_db"
+OTREE_ADMIN_PASSWORD="YourSecurePassword"
+OTREE_PRODUCTION=0
+```
 
-```powershell
+**4. Initialize the Database**
+Run this command to create the necessary tables in your PostgreSQL database (first time only, or after model changes):
+```bash
 otree resetdb
 ```
 
-4. **Start the development server**:
-
-```powershell
+**5. Start the Development Server**
+```bash
 otree devserver
 ```
 
-5. **Access the experiment**:
-   - Open browser to: http://localhost:8000
-   - Click "Demo" next to "Pay-What-You-Want Game"
-   - Open 2 browser windows (or use incognito mode) for testing
+**6. Access the Experiment**
+- Open browser to: http://localhost:8000
+- Click "Demo" next to "Pay-What-You-Want Game"
+- Open 2 browser windows (or use incognito mode) for testing
 
-#### Option B: Running with Docker (Terminal Only)
-
-You can run this project on any operating system (Windows, macOS, Linux) using just the terminal.
-
-**1. Install Docker (via Terminal)**
-
-If you don't have Docker installed, you can install it using your system's package manager:
-
-- **Windows** (PowerShell):
-  ```powershell
-  winget install Docker.DockerDesktop
-  ```
-- **macOS** (Homebrew):
-  ```bash
-  brew install --cask docker
-  ```
-- **Linux** (Ubuntu/Debian):
-  ```bash
-  sudo apt-get update
-  sudo apt-get install docker.io
-  ```
-
-*Note: After installation, ensure Docker is running.*
-
-**2. Run the Project**
-
-Open your terminal in the project folder and run these two commands:
-
-1. **Build the image** (only needed once):
-   ```bash
-   docker build -t pwyw-experiment .
-   ```
-
-2. **Run the container**:
-   ```bash
-   docker run -p 8000:8000 pwyw-experiment
-   ```
-
-3. **Access**: Open http://localhost:8000 in your browser.
 
 #### Testing Checklist
 
@@ -319,5 +291,5 @@ Labels for the Likert scale questions are defined in the `labels` dictionary wit
 - **Framework**: oTree 5.x
 - **Language**: Python 3.7+
 - **Frontend**: Bootstrap 4 (built into oTree), Custom HTML/CSS for specific formatting
-- **Database**: SQLite (development) / PostgreSQL (production recommended)
+- **Database**: PostgreSQL (for both development and production)
 
