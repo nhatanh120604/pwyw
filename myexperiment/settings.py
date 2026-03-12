@@ -1,10 +1,13 @@
 from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()
 
 SESSION_CONFIGS = [
     dict(
         name="decision_making_game",
         display_name="Decision-making in the absence of fixed prices",
-        num_demo_participants = 2,
+        num_demo_participants=2,
         app_sequence=["my_game"],
         doc="""
         Pricing experiment with 6+ players.
